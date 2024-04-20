@@ -1,20 +1,12 @@
 #!/bin/bash
-# Test code for syspro2023 kadai3
+# Test code for syspro2024 kadai3
 # Written by Shinichi Awamoto and Daichi Morita
-# Edited by PENG AO
+# Edited by Momoko Shiraishi
 
 state=0
 warn() { echo $1; state=1; }
 dir=$(mktemp -d)
 trap "rm -rf $dir" 0
-
-check-report() {
-    if [ ! -f report-$1.txt ]; then
-        $2 "kadai-$1: Missing report-$1.txt."
-    elif [ `cat report-$1.txt | wc -l` -eq 0 ]; then
-        $2 "kadai-$1: 'report-$1.txt' is empty!"
-    fi
-}
 
 kadai-a() {
     if [ -d kadai-a ]; then
@@ -48,8 +40,6 @@ kadai-a() {
         if [ `grep '\-Wall' Makefile | wc -l` -eq 0 ]; then
             warn "kadai-a: Missing '-Wall' option."
         fi
-
-        check-report a warn
 
         popd > /dev/null 2>&1
     else
@@ -90,8 +80,6 @@ kadai-b() {
             warn "kadai-b: Missing '-Wall' option."
         fi
 
-        check-report b warn
-
         popd > /dev/null 2>&1
     else
         warn "kadai-b: No 'kadai-b' directory!"
@@ -131,8 +119,6 @@ kadai-c() {
             warn "kadai-c: Missing '-Wall' option."
         fi
 
-        check-report c warn
-
         popd > /dev/null 2>&1
     else
         warn "kadai-c: No 'kadai-c' directory!"
@@ -143,8 +129,6 @@ kadai-d() {
     if [ -d kadai-d ]; then
         cp -r kadai-d $dir
         pushd $dir/kadai-d > /dev/null 2>&1
-
-        check-report d warn
 
         popd > /dev/null 2>&1
     fi
